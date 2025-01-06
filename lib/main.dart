@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tp1_hai912i/screens/quizz_page.dart';
+import 'package:provider/provider.dart';
+import 'providers/quiz_provider.dart';
+import 'screens/quiz_page_provider.dart';
 import 'screens/profile_page.dart';
 
 void main() => runApp(const MyApp());
@@ -9,17 +11,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TP1 Flutter',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => QuizProvider()),
+      ],
+      child: MaterialApp(
+        title: 'TP1 Flutter',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const ProfileHomePage(),
+          '/quiz': (context) => const QuizPageProvider(title: 'Questions/Réponses'),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const ProfileHomePage(),
-        '/quiz': (context) => const QuizPage(title: 'Questions/Réponses'),
-      },
     );
   }
 }
